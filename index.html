@@ -1,24 +1,4 @@
-import json
-from datetime import datetime
-from pathlib import Path
-from html import escape
-
-
-def build_website(input_file='enriched_messages.json', output_file='index.html'):
-    """Build a static HTML page from enriched WhatsApp chat messages."""
-    if not Path(input_file).exists():
-        raise FileNotFoundError(f"Enriched messages file not found: {input_file}")
-
-    with open(input_file, 'r', encoding='utf-8') as infile:
-        messages = json.load(infile)
-
-    grouped = {}
-    for message in messages:
-        date = message.get('date', 'Unknown Date')
-        grouped.setdefault(date, []).append(message)
-
-    html_parts = []
-    html_parts.append(r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -188,46 +168,44 @@ def build_website(input_file='enriched_messages.json', output_file='index.html')
       <h1>శివ మహాపురాణం</h1>
       <div class="subtitle">Shiva Mahapurana — Enriched English Translations</div>
     </header>
-''')
+    <section class="date-group">
+      <h2 class="date-heading">12/3/26</h2>
+      <article class="message-card">
+        <div class="meta">
+          <span class="dot"></span>
+          <span>12/3/26, 2:30 PM</span>
+        </div>
+        <div class="telugu-text">శ్రీ లలితాంబికగా, ఆదిదేవి తపస్సు చేసిన ప్రదేశం నైమి శారణ్యం. కృతయుగం నాటి క్షేత్రస్థలి ఇది.</div>
+        <div class="divider"></div>
+        <div class="translation">Naimisharanya is a deeply peaceful, sacred forest where the primordial Mother Goddess, known lovingly as Sri Lalitambika, once performed her intense spiritual meditation. This beautiful sanctuary dates back to the Golden Age—the very first epoch of cosmic history, when the world was filled with pure truth and harmony. It remains a place where the earth still whispers with the ancient, gentle energy of the Divine Mother.</div>
+      </article>
+      <article class="message-card">
+        <div class="meta">
+          <span class="dot"></span>
+          <span>12/3/26, 2:31 PM</span>
+        </div>
+        <div class="telugu-text">ఒకానొకప్పుడు ఋషు లందరూ కలిసి తమకొక దివ్యమైన తపోస్థలిని ప్రసాదించమని బ్రహ్మను కోరారు.</div>
+        <div class="divider"></div>
+        <div class="translation">Once upon a time, a group of wise sages gathered together with a deep longing in their hearts. They approached Brahma, the Creator of the universe, with a humble request to grant them a sacred sanctuary on Earth. They wished for a beautiful, peaceful space dedicated entirely to quiet meditation, where they could easily connect with the divine. It was their hope to find a spiritual home free from the chaotic distractions of the world.</div>
+      </article>
+      <article class="message-card">
+        <div class="meta">
+          <span class="dot"></span>
+          <span>12/3/26, 2:32 PM</span>
+        </div>
+        <div class="telugu-text">నమో దేవాయ మహతే - దేవదేవాయ - శూలినే! త్ర్యంబకాయ త్రినేత్రాయ - యోగినాంపతయే నమః!!</div>
+        <div class="divider"></div>
+        <div class="translation">This beautiful verse from the Shiva Purana is a heartfelt hymn of praise, calling upon Shiva in his most magnificent yet deeply personal forms. 
 
-    for date in sorted(grouped.keys(), key=lambda d: d if d != 'Unknown Date' else ''):
-        html_parts.append('    <section class="date-group">\n')
-        html_parts.append(f'      <h2 class="date-heading">{escape(date)}</h2>\n')
+*&quot;I bow to the supreme, great Divine, the God of all gods, who holds the sacred trident that dissolves our earthly sorrows.* *Salutations to the three-eyed Lord of infinite wisdom, who is the ultimate guide and protector of all seekers and meditators.&quot;* 
 
-        for message in grouped[date]:
-            original = escape(message.get('message', ''))
-            enriched = escape(message.get('enriched_english', 'Translation unavailable'))
-            date_value = escape(message.get('date', ''))
-            time_value = escape(message.get('time', ''))
-            sender = escape(message.get('sender', 'Unknown'))
+In this prayer, we honor the one who sees past the illusions of our physical world, inviting us to find that same quiet stillness and eternal light within ourselves.</div>
+      </article>
+    </section>
 
-            html_parts.append('      <article class="message-card">\n')
-            html_parts.append('        <div class="meta">\n')
-            html_parts.append('          <span class="dot"></span>\n')
-            html_parts.append(f'          <span>{date_value}, {time_value}</span>\n')
-            html_parts.append('        </div>\n')
-            html_parts.append(f'        <div class="telugu-text">{original}</div>\n')
-            html_parts.append('        <div class="divider"></div>\n')
-            html_parts.append(f'        <div class="translation">{enriched}</div>\n')
-            html_parts.append('      </article>\n')
-
-        html_parts.append('    </section>\n')
-
-    html_parts.append('''
     <div class="footer">
       Sacred Reflections
     </div>
   </div>
 </body>
 </html>
-''')
-
-    with open(output_file, 'w', encoding='utf-8') as outfile:
-        outfile.write(''.join(html_parts))
-
-    print('Website built! Open index.html in your browser.')
-    return output_file
-
-
-if __name__ == '__main__':
-    build_website()
