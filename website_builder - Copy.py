@@ -70,16 +70,7 @@ def build_website(input_file='enriched_messages.json', output_file='index.html')
       padding: 34px 20px 44px;
       position: relative;
     }
-  .header-image {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      width: 120px;
-      border: 2px solid #c8a415;
-      border-radius: 10px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
-      z-index: 100;
-    }
+
     header::after {
       content: '';
       display: block;
@@ -88,17 +79,6 @@ def build_website(input_file='enriched_messages.json', output_file='index.html')
       background: var(--saffron);
       margin: 20px auto 0;
       opacity: 0.95;
-    }
-
-    .header-image {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      width: 120px;
-      border: 2px solid #c8a415;
-      border-radius: 10px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
-      z-index: 100;
     }
 
     h1 {
@@ -205,15 +185,6 @@ def build_website(input_file='enriched_messages.json', output_file='index.html')
 <body>
   <div class="container">
     <header>
-      <img
-        src="Shiva.jpg"
-        class="header-image"
-      >
-      <img
-        src="Shiva.jpg"
-        alt="Lord Shiva"
-        class="header-image"
-      >
       <h1>శివ మహాపురాణం</h1>
       <div class="subtitle">Shiva Mahapurana — Enriched English Translations</div>
     </header>
